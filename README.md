@@ -1,0 +1,3 @@
+Math is for math.
+
+:)
