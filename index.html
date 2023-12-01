@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Quiz</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    font-weight: bold;
+}
+
+#quiz {
+    background-color: #f7f7f7;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#options .list-group-item {
+    cursor: pointer;
+}
+
+#options .list-group-item.active {
+    background-color: #007bff;
+    color: #fff;
+}
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="bg-dark text-white text-center p-4">
+        Math Quiz
+    </header>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 id="question">Question</h2>
+                <ul id="options" class="list-group">
+                    <li class="list-group-item">Option 1</li>
+                    <li class="list-group-item">Option 2</li>
+                    <li class="list-group-item">Option 3</li>
+                    <li class="list-group-item">Option 4</li>
+                    <li class="list-group-item">Option 5</li>
+                    <li class="list-group-item">Option 6</li>
+                    <li class="list-group-item">Option 7</li>
+                </ul>
+                <button id="nextButton" class="btn btn-primary mt-3">Next</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+    var questions = [
+        {
+            question: "What is the capital of France?",
+            options: ["Paris", "London", "Berlin", "Madrid", "Rome", "Tokyo", "New York"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "What is the largest planet in our solar system?",
+            options: ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus"],
+            correctAnswer: "Jupiter"
+        },
+        {
+            question: "What is the chemical symbol for gold?",
+            options: ["Au", "Ag", "Cu", "Fe", "Hg", "Pb", "Na"],
+            correctAnswer: "Au"
+        },
+        {
+            question: "Which country won the FIFA World Cup in 2018?",
+            options: ["Brazil", "Germany", "Argentina", "France", "Spain", "Italy", "England"],
+            correctAnswer: "France"
+        },
+        {
+            question: "What is the tallest mountain in the world?",
+            options: ["Mount Everest", "K2", "Kangchenjunga", "Lhotse", "Makalu", "Cho Oyu", "Dhaulagiri"],
+            correctAnswer: "Mount Everest"
+        },
+        {
+            question: "Who painted the Mona Lisa?",
+            options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh", "Michelangelo", "Rembrandt", "Claude Monet", "Salvador Dali"],
+            correctAnswer: "Leonardo da Vinci"
+        },
+        {
+            question: "What is the largest ocean in the world?",
+            options: ["Atlantic Ocean", "Indian Ocean", "Southern Ocean", "Arctic Ocean", "Pacific Ocean", "Mediterranean Sea", "Caribbean Sea"],
+            correctAnswer: "Pacific Ocean"
+        }
+    ];
+
+    var currentQuestion = 0;
+    var score = 0;
+
+    function loadQuestion() {
+        var question = questions[currentQuestion];
+        $("#question").text(question.question);
+        $("#options").empty();
+        for (var i = 0; i < question.options.length; i++) {
+            var option = $("<li>").addClass("list-group-item").text(question.options[i]);
+            $("#options").append(option);
+        }
+    }
+
+    function checkAnswer(selectedAnswer) {
+        var question = questions[currentQuestion];
+        if (selectedAnswer === question.correctAnswer) {
+            score++;
+        }
+    }
+
+    function showNextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        $("#quiz").html("<h2>Your Score: " + score + "/" + questions.length + "</h2>");
+    }
+
+    // Load initial question
+    loadQuestion();
+
+    // Event listener for option selection
+    $(document).on("click", "#options .list-group-item", function() {
+        $(this).addClass("active").siblings().removeClass("active");
+        var selectedAnswer = $(this).text();
+        checkAnswer(selectedAnswer);
+    });
+
+    // Event listener for next button
+    $(document).on("click", "#nextButton", function() {
+        showNextQuestion();
+    });
+});
+    </script>
+</body>
+</html>
